@@ -8,7 +8,7 @@
 ### Vite
 
 ```bash
-npm create vite@latest rotem-fortune -- --template react-ts 
+npm create vite@latest react-service-loacator -- --template react-ts 
 ```
 
 ### Eslint and prettier
