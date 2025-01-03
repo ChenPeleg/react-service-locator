@@ -39,7 +39,7 @@ Add the prettier rules:
   "singleQuote": true,
   "endOfLine": "auto"
 }
-"@ | Out-File -FilePath .prettierrc -Encoding utf8
+"@ | Out-File -FilePath .prettierrc -Enco utf8
 
 ```
 
