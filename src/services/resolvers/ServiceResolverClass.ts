@@ -1,87 +1,55 @@
-import { LocalStorageService } from '../LocalStorageService.ts';
+import { ResourceProvider } from '../abstract/ResourceProvider.ts';
+
+export type ResourceProviderConstructor = new (...args: any[]) => ResourceProvider;
 
 export class ServicesResolver {
+
     private static _instance: ServicesResolver;
-    private readonly environment:
+    private readonly _environment:
         | 'test'
         | 'development'
         | 'production'
         | string;
-    private localStorageServiceImp: LocalStorageService;
+    private _servicesMap = new Map<any, any>();
 
-    constructor(environment: string) {
-        this.environment = environment;
-        const implementations = this.mapServicesByEnvironment(environment);
-        this.localStorageServiceImp = implementations.localStorageServiceImp;
+    constructor({
+                    environment,
+                    services,
+                }: { environment: string, services: ResourceProviderConstructor[] }) {
+        this._environment = environment;
+        services.forEach((service) => {
+            this.addService(service);
+        });
     }
 
-    get localStorageService(): LocalStorageService {
-        return this.localStorageServiceImp;
+    public get environment() {
+        return this._environment;
     }
 
-    public static SingletonInstance(environment: string): ServicesResolver {
-        // Do you need arguments? Make it a regular static method instead.
+    public static SingletonInstance({
+                                        environment,
+                                        services,
+                                    }: { environment: string, services: ResourceProviderConstructor[] }): ServicesResolver {
+
         return (
             this._instance ||
-            (this._instance = new ServicesResolver(environment))
+            (this._instance = new ServicesResolver({
+                environment,
+                services,
+            }))
         );
     }
 
-    public clone(): ServicesResolver {
-        const clonedInstance = new ServicesResolver(this.environment);
-        clonedInstance.localStorageServiceImp = this.localStorageServiceImp;
-        return clonedInstance;
+    public addService(service: ResourceProviderConstructor) {
+        if (this._servicesMap.has(service)) {
+            throw new Error(`Service ${service} already exists`);
+        }
+        this._servicesMap.set(service, this.initializeServices(service));
     }
 
-    public overrideServices(
-        serviceName:
-            | 'localStorageService',
-        service: any,
-    ) {
-        if (this.environment === 'production') {
-            throw new Error(
-                'Cannot change services implementation in production',
-            );
-        }
-        switch (serviceName) {
-
-            case 'localStorageService':
-                this.localStorageServiceImp = service;
-                break;
-
-            default:
-                throw new Error(`Invalid service name ${serviceName}`);
-        }
-    }
-
-    private mapServicesByEnvironment(environment: string) {
-
-        let localStorageServiceImp;
-
+    private initializeServices(service: ResourceProviderConstructor) {
         const provider = this;
-        switch (environment) {
-            case 'test':
-
-                localStorageServiceImp = new LocalStorageService(provider);
-
-
-                break;
-            case 'development':
-                localStorageServiceImp = new LocalStorageService(provider);
-
-
-                break;
-            case 'production':
-                localStorageServiceImp = new LocalStorageService(provider);
-
-                break;
-            default:
-                throw new Error(`Invalid environment ${environment}`);
-        }
-        return {
-
-            localStorageServiceImp,
-
-        };
+        return new service(provider);
     }
+
 }

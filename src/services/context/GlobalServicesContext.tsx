@@ -5,13 +5,14 @@ import { appConfig } from '../../appConfig.ts';
 const GlobalServicesContext = createContext<ServicesResolver>(
     {} as ServicesResolver
 );
+
 const GlobalServiceSetterContext = createContext<any>({});
 const DevelopmentDispatchServicesProvider = (
     state: ServicesResolver,
     action: {
         type: 'overriderServices';
         payload: {
-            serviceName:
+            serviceToken:
                 | 'localStorageService'
             service: any;
         };
@@ -21,7 +22,7 @@ const DevelopmentDispatchServicesProvider = (
         case 'overriderServices':
             const newState = state.clone();
             newState.overrideServices(
-                action.payload.serviceName,
+                action.payload.serviceToken,
                 action.payload.service
             );
             return state;
@@ -36,7 +37,11 @@ export const GlobalServicesProvider = ({
     children: ReactNode;
 }) => {
     const servicesSupplierInitialState = new ServicesResolver(
-        appConfig.environment
+        { environment:
+            appConfig
+            .environment,
+            services:[]
+        },
     );
     const [servicesGetters, dispatch] = useReducer(
         DevelopmentDispatchServicesProvider,
