@@ -2,7 +2,9 @@
 
 export class HttpService {
     public baseUrl: string;
-    constructor(baseUrl : string) {
+    constructor(baseUrl : string)
+    {
+        console.log('Http service constructor')
          this.baseUrl = baseUrl;
     }
     getStrings() {

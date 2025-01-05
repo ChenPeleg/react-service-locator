@@ -1,5 +1,4 @@
 import React from 'react';
-import { ServiceContainerRegistry } from './react-service-provider.tsx';
 
 
 export type ServiceFor<T> = T extends new (...args: any[]) => infer R ? R : any;
@@ -34,10 +33,6 @@ export type Provider<T> =
 export type Providers = Array<Provider<any>>;
 
 
-export type ServiceContainerRegistryReadonlyProxy = Pick<
-    ServiceContainerRegistry,
-    "get"
->;
 
 
 export type ServiceContainerProps = React.PropsWithChildren<{

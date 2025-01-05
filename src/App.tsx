@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import './App.css'
 import { Consumer } from './components/Comsumer.tsx';
+import { ConsumerTwo } from './components/ComsumerTwo.tsx';
 
 function App() {
   const [count, setCount] = useState(0)
@@ -9,6 +10,7 @@ function App() {
     <>
       <h1>React Service Locator pattern</h1>
         <Consumer />
+        <ConsumerTwo/>
       <div className="card">
         <button onClick={() => setCount((count) => count + 1)}>
           count is {count}

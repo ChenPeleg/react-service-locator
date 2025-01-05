@@ -1,6 +1,7 @@
 export class SimpleService {
     public env: string;
     constructor(env : string) {
+        console.log('SimpleService service constructor')
          this.env = env;
     }
 
