@@ -1,6 +1,6 @@
-import { ResourceProvider } from '../abstract/ResourceProvider.ts';
+import { AbstractBaseService } from '../abstract/AbstractBaseService.ts';
 
-export type ResourceProviderConstructor = new (...args: any[]) => ResourceProvider;
+export type ResourceProviderConstructor = new (...args: any[]) => AbstractBaseService;
 
 export class ServicesResolver {
 

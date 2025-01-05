@@ -1,7 +1,7 @@
-import { ResourceProvider } from './abstract/ResourceProvider.ts';
+import { AbstractBaseService } from './abstract/AbstractBaseService.ts';
 import { ServicesResolver } from './resolvers/ServiceResolverClass.ts';
 
-export class LocalStorageService extends ResourceProvider {
+export class LocalStorageService extends AbstractBaseService {
     public static readonly STYLE_SETTINGS = 'app_sorcery_style_settings';
     public static readonly SHOW_RECOMMENDED_FONTS =
         'app_sorcery_show_recommended_fonts';

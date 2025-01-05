@@ -62,7 +62,7 @@ export class ServiceContainerRegistry {
                 `[react-service-provider] Missing "provide" key in object with key(s): ${ServiceProviderUtils.stringifyKeys(
                     provider,
                 )}. ` +
-                'Each provider must specify a "provide" key as well as one of the correct use* values.';
+                'Each servicesProvider must specify a "provide" key as well as one of the correct use* values.';
             throw new Error(errorMsg);
         }
 
@@ -97,7 +97,7 @@ export class ServiceContainerRegistry {
                                 `[react-service-container] Failed alias lookup for useExisting provider ${String(
                                     provider,
                                 )}. ` +
-                                'It looks like you passed a token to `useExisting` that was not registered as a provider. ' +
+                                'It looks like you passed a token to `useExisting` that was not registered as a servicesProvider. ' +
                                 'Ensure that the token given is registered *before* the alias is referenced. ' +
                                 'If the value reference by the alias is provided within the same providers array as the alias, ' +
                                 'ensure that it comes before the alias in the providers array.';
