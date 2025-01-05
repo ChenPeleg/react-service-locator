@@ -1,7 +1,6 @@
 import React, { useContext } from 'react';
 import {
     Provider,
-    Providers,
     ServiceContainerProps,
     ServiceFor,
     UseClassProvider,
@@ -9,6 +8,7 @@ import {
     UseFactoryProvider,
     UseValueProvider,
 } from './react-service-provider.types.ts';
+import { ServiceProviderUtils } from './react-service-provider-utils.tsx';
 
 const UNINSTANTIATED = Symbol.for('uninstantiated');
 
@@ -17,15 +17,17 @@ export class ServiceContainerRegistry {
     private providers = new Map<any, any>();
 
     constructor(
-        private readonly parent: ServiceContainerRegistry | null,
+        private readonly parentServiceContainerRegistries: ServiceContainerRegistry | null,
     ) {
-        this.parent = parent;
+        this.parentServiceContainerRegistries = parentServiceContainerRegistries;
         this.providers = new Map();
     }
 
     get<T, R = ServiceFor<T>>(serviceToken: T): R {
+
         if (this.providers.has(serviceToken)) {
             const initFn = this.providers.get(serviceToken) as () => R;
+            console.log(initFn)
             try {
                 return initFn();
             } catch (err) {
@@ -39,10 +41,10 @@ export class ServiceContainerRegistry {
             }
         }
 
-        if (this.parent != null) {
+        if (this.parentServiceContainerRegistries != null) {
             // This will recursively call each parent registry, until the base environment is hit in
             // which case the base case is thrown below.
-            return this.parent.get(serviceToken);
+            return this.parentServiceContainerRegistries.get(serviceToken);
         }
 
         const errorMsg =
@@ -57,7 +59,7 @@ export class ServiceContainerRegistry {
     add<T>(provider: Provider<T>) {
         if (!('provide' in provider)) {
             const errorMsg =
-                `[react-service-container] Missing "provide" key in object with key(s): ${stringifyKeys(
+                `[react-service-container] Missing "provide" key in object with key(s): ${ServiceProviderUtils.stringifyKeys(
                     provider,
                 )}. ` +
                 'Each provider must specify a "provide" key as well as one of the correct use* values.';
@@ -104,7 +106,7 @@ export class ServiceContainerRegistry {
                     break;
                 default:
                     const errorMsg =
-                        `[create-service-container] Provider missing proper use* value in key(s): ${stringifyKeys(
+                        `[create-service-container] Provider missing proper use* value in key(s): ${ServiceProviderUtils.stringifyKeys(
                             provider,
                             (k) => k !== 'provide',
                         )}. ` +
@@ -131,7 +133,7 @@ export function ServiceContainer({
                                      children,
                                  }: ServiceContainerProps) {
     const parent = useContext(ServiceContainerContext);
-    const registry = buildRegistry(providers, parent);
+    const registry = ServiceProviderUtils.buildRegistry(providers, parent);
 
     return (
         <ServiceContainerContext.Provider value={registry}>
@@ -155,51 +157,3 @@ export function useService<T, R = ServiceFor<T>>(serviceToken: T): R {
     return container.get<T, R>(serviceToken);
 }
 
-//
-// function readonlyProxy(
-//     registry: ServiceContainerRegistry,
-// ) {
-//     return {
-//         get<T>(serviceToken: any): ServiceFor<T> {
-//             return registry.get<T>(serviceToken);
-//         },
-//     };
-// }
-
-function buildRegistry(
-    providers: Providers,
-    parent: ServiceContainerRegistry | null,
-) {
-    const registry = new ServiceContainerRegistry(parent);
-    addProviders(registry, providers);
-    return registry;
-}
-
-function addProviders(
-    registry: ServiceContainerRegistry,
-    providers: Providers,
-) {
-    normalize(providers).forEach((provider) => {
-        registry.add(provider);
-    });
-}
-
-function normalize(providers: Providers): Providers {
-    return providers.map((provider) => {
-        const assumeClassShorthand = typeof provider === 'function';
-        if (assumeClassShorthand) {
-            return {
-                provide: provider,
-                useClass: provider as UseClassProvider<any>['useClass'],
-            };
-        }
-        return provider;
-    });
-}
-
-function stringifyKeys(obj: {}, filter = (_k: string) => true) {
-    return Object.keys(obj)
-        .filter(filter)
-        .map((k) => `"${k}"`)
-        .join(', ');
-}
