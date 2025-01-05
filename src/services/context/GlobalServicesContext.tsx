@@ -1,6 +1,6 @@
 import { createContext, ReactNode, useContext, useReducer } from 'react';
 import { ServicesResolver } from '../resolvers/ServiceResolverClass.ts';
-import { appConfig } from '../../configuration/appConfig.ts';
+import { appConfig } from '../../appConfig.ts';
 
 const GlobalServicesContext = createContext<ServicesResolver>(
     {} as ServicesResolver
@@ -12,10 +12,7 @@ const DevelopmentDispatchServicesProvider = (
         type: 'overriderServices';
         payload: {
             serviceName:
-                | 'settingService'
                 | 'localStorageService'
-                | 'booksDataService'
-                | 'userDataService';
             service: any;
         };
     }

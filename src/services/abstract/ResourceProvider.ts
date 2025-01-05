@@ -5,7 +5,7 @@ export abstract class ResourceProvider {
     protected get services() {
         return this.serviceProvider;
     }
-    protected constructor(provider: ServicesResolver) {
-        this.serviceProvider = provider;
+    protected constructor(serviceProvider: ServicesResolver) {
+        this.serviceProvider = serviceProvider;
     }
 }
