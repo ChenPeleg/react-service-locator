@@ -2,6 +2,7 @@ import { createContext, ReactNode, useContext } from 'react';
 import { ServicesResolver } from '../resolvers/ServiceResolverClass.ts';
 import { appConfig } from '../../appConfig.ts';
 import { LocalStorageService } from '../LocalStorageService.ts';
+import { SimpleService } from '../simple.service.ts';
 
 const GlobalServicesContext = createContext<ServicesResolver>(
     {} as ServicesResolver,
@@ -19,7 +20,7 @@ export const GlobalServicesProvider =
                 environment:
                 appConfig
                     .environment,
-                services: [LocalStorageService],
+                services: [LocalStorageService,SimpleService],
             },
         );
 
