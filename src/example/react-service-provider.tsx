@@ -54,9 +54,7 @@ export class ServiceContainerRegistry {
             'service containers, you have configured your providers array to provide a value for this type.';
         throw new Error(errorMsg);
     }
-    private getFromOwnProvider () {
 
-    }
 
     add<T>(provider: Provider<T>) {
         if (!('provide' in provider)) {
