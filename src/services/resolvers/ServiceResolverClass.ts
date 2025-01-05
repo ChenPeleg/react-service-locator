@@ -46,6 +46,13 @@ export class ServicesResolver {
         }
         this._servicesMap.set(service, this.initializeServices(service));
     }
+    public getService(service: ResourceProviderConstructor) {
+        if (!this._servicesMap.has(service)) {
+            throw new Error(`Service ${service} does not exist`);
+        }
+        console.log(this._servicesMap.get(service) )
+        return this._servicesMap.get(service);
+    }
 
     private initializeServices(service: ResourceProviderConstructor) {
         const provider = this;

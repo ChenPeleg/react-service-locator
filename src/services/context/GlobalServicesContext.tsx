@@ -1,60 +1,34 @@
-import { createContext, ReactNode, useContext, useReducer } from 'react';
+import { createContext, ReactNode, useContext } from 'react';
 import { ServicesResolver } from '../resolvers/ServiceResolverClass.ts';
 import { appConfig } from '../../appConfig.ts';
+import { LocalStorageService } from '../LocalStorageService.ts';
 
 const GlobalServicesContext = createContext<ServicesResolver>(
-    {} as ServicesResolver
+    {} as ServicesResolver,
 );
 
-const GlobalServiceSetterContext = createContext<any>({});
-const DevelopmentDispatchServicesProvider = (
-    state: ServicesResolver,
-    action: {
-        type: 'overriderServices';
-        payload: {
-            serviceToken:
-                | 'localStorageService'
-            service: any;
-        };
-    }
-): ServicesResolver => {
-    switch (action.type) {
-        case 'overriderServices':
-            const newState = state.clone();
-            newState.overrideServices(
-                action.payload.serviceToken,
-                action.payload.service
-            );
-            return state;
-        default:
-            return state;
-    }
-};
 
-export const GlobalServicesProvider = ({
-    children,
-}: {
-    children: ReactNode;
-}) => {
-    const servicesSupplierInitialState = new ServicesResolver(
-        { environment:
-            appConfig
-            .environment,
-            services:[]
-        },
-    );
-    const [servicesGetters, dispatch] = useReducer(
-        DevelopmentDispatchServicesProvider,
-        servicesSupplierInitialState
-    );
+export const GlobalServicesProvider =
+    ({
+         children,
+     }: {
+        children: ReactNode;
+    }) => {
+        const servicesSupplierInitialState = new ServicesResolver(
+            {
+                environment:
+                appConfig
+                    .environment,
+                services: [LocalStorageService],
+            },
+        );
 
-    return (
-        <GlobalServicesContext.Provider value={servicesGetters}>
-            <GlobalServiceSetterContext.Provider value={dispatch}>
+
+        return (
+            <GlobalServicesContext.Provider value={servicesSupplierInitialState}>
                 {children}
-            </GlobalServiceSetterContext.Provider>
-        </GlobalServicesContext.Provider>
-    );
-};
+            </GlobalServicesContext.Provider>
+        );
+    };
 
 export const useServicesContext = () => useContext(GlobalServicesContext);
