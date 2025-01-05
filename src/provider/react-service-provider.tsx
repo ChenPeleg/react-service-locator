@@ -26,10 +26,9 @@ export class ServiceContainerRegistry {
     get<T, R = ServiceFor<T>>(serviceToken: T): R {
 
         if (this.providers.has(serviceToken)) {
-            const initFn = this.providers.get(serviceToken) as () => R;
-            console.log(initFn)
+            const serviceGetterFn = this.providers.get(serviceToken) as () => R;
             try {
-                return initFn();
+                return serviceGetterFn();
             } catch (err) {
                 console.error(
                     `[react-service-container] Provider for ${String(
@@ -55,11 +54,14 @@ export class ServiceContainerRegistry {
             'service containers, you have configured your providers array to provide a value for this type.';
         throw new Error(errorMsg);
     }
+    private getFromOwnProvider () {
+
+    }
 
     add<T>(provider: Provider<T>) {
         if (!('provide' in provider)) {
             const errorMsg =
-                `[react-service-container] Missing "provide" key in object with key(s): ${ServiceProviderUtils.stringifyKeys(
+                `[react-service-provider] Missing "provide" key in object with key(s): ${ServiceProviderUtils.stringifyKeys(
                     provider,
                 )}. ` +
                 'Each provider must specify a "provide" key as well as one of the correct use* values.';
@@ -67,6 +69,7 @@ export class ServiceContainerRegistry {
         }
 
         let instance: ServiceFor<T> = UNINSTANTIATED as any;
+
         const initFn = () => {
             if (instance !== UNINSTANTIATED) {
                 return instance;
@@ -120,6 +123,7 @@ export class ServiceContainerRegistry {
 
         this.providers.set((provider as any).provide, initFn);
     }
+
 }
 
 
