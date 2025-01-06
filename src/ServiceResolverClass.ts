@@ -1,4 +1,4 @@
-import { AbstractBaseService } from '../abstract/AbstractBaseService.ts';
+import { AbstractBaseService } from './AbstractBaseService.ts';
 
 export type ServiceConstructorClass = new (...args: any[]) => AbstractBaseService;
 export type ServiceWithSpecificToken = {

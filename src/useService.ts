@@ -1,5 +1,5 @@
-import {  ServicesProviderContext } from '../context/ServicesProvider.tsx';
-import { ServiceConstructorClass } from '../core/ServiceResolverClass.ts';
+import {  ServicesProviderContext } from './ServicesProvider.tsx';
+import { ServiceConstructorClass } from './ServiceResolverClass.ts';
 import { useContext } from 'react';
 
 // Overload signatures for useService hook

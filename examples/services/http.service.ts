@@ -1,5 +1,5 @@
-import { AbstractBaseService } from '../../src/abstract/AbstractBaseService.ts';
-import { ServicesResolver } from '../../src/core/ServiceResolverClass.ts';
+import { AbstractBaseService } from '../../src/AbstractBaseService.ts';
+import { ServicesResolver } from '../../src/ServiceResolverClass.ts';
 
 
 export class HttpService extends AbstractBaseService {

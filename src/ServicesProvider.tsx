@@ -1,5 +1,5 @@
 import { createContext, ReactNode, useMemo } from 'react';
-import {   ServiceInjectionMethod, ServicesResolver } from '../core/ServiceResolverClass.ts';
+import {   ServiceInjectionMethod, ServicesResolver } from './ServiceResolverClass.ts';
 
 export const ServicesProviderContext = createContext<ServicesResolver>(
     {} as ServicesResolver,

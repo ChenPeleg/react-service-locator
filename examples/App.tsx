@@ -1,9 +1,9 @@
 import './App.css';
-import { Consumer } from '../src/components/Comsumer.tsx';
-import { ConsumerTwo } from '../src/components/ComsumerTwo.tsx';
+import { Consumer } from './components/Comsumer.tsx';
+import { ConsumerTwo } from './components/ComsumerTwo.tsx';
 import { LocalStorageService } from './services/LocalStorageService.ts';
 import { DataService } from './services/dataService.ts';
-import { ServicesProvider } from '../src/context/ServicesProvider.tsx';
+import { ServicesProvider } from '../src/ServicesProvider.tsx';
 import { HttpService } from './services/http.service.ts';
 
 function App() {
