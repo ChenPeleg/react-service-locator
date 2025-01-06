@@ -1,5 +1,11 @@
 # React service locator
 
+This version is not stable yet, I'm still working on it.
+
+## Features
+
+This utility is a simple service locator for React applications.
+
 This is a simple service locator for React, my goals while building this library were:
 
 1. To have a centered place to store all the services that my application needs.
@@ -139,3 +145,10 @@ export const Consumer = () => {
        </div>;
 };
 ```
+
+
+## Todo
+
+- add tests
+- add more examples
+- add more documentation about complex usage
