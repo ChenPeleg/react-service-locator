@@ -35,11 +35,9 @@ export class DataService extends AbstractBaseService {
     constructor(provider: ServicesResolver) {
         super(provider);
     }
-
     getData(url) {
          // fetch data from the url
     }
- 
 }
 ```
 #### Add the `ServiceLocatorProvider`
@@ -52,7 +50,7 @@ import React from 'react';
 import { ServiceLocatorProvider } from 'react-service-locator';
 
 <ServicesProvider
-    services={[  DataService]}>
+    services={[DataService]}>
     <Consumer />
 
 </ServicesProvider>
@@ -83,13 +81,31 @@ export const Consumer = () => {
 create a new service that depends on the `DataService`:
 
 ```typescript
+import { DataService } from './dataService';
+
 export class ProfileDataService extends AbstractBaseService {
     constructor(provider: ServicesResolver) {
         super(provider);
     }
-   async getProphileData() {
-      return   this.getService(DataService).getData('https://getmydata.com/prohile');
+
+    async getProphileData() {
+      const dataService =  this.servicesProvider.getService(DataService)
+      dataService.getData('https://getmydata.com/prohile');
     }
- 
 }
 ```
+
+Notice the `AbstractBaseService` class has a `servicesProvider` property that you can use to get other services.
+
+As you can see, the `ProfileDataService` depends on the `DataService` service.
+This is not classic Dependency Injection, but it's close enough:
+The main difference is that it's lazy-loaded, so you don't have to worry about the order of the services.
+
+> This means you can't use get Other services inside the service class constructor. Because the services are not yet registered.
+
+
+Add the `ProfileDataService` to the `ServiceLocatorProvider`:
+
+```tsx
+import React from 'react';
+
