@@ -152,3 +152,9 @@ export const Consumer = () => {
 - add tests
 - add more examples
 - add more documentation about complex usage
+
+
+## Inspiration
+
+This library was inspired by the [Angular service locator](https://angular.io/guide/dependency-injection-providers) and the [React hooks](https://reactjs.org/docs/hooks-intro.html) API.
+And also [react-service-locator](https://github.com/rhyek/react-service-locator) library.
