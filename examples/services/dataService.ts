@@ -1,6 +1,6 @@
-import { AbstractBaseService } from './abstract/AbstractBaseService.ts';
+import { AbstractBaseService } from '../../src/abstract/AbstractBaseService.ts';
 import { LocalStorageService } from './LocalStorageService.ts';
-import { ServicesResolver } from './core/ServiceResolverClass.ts';
+import { ServicesResolver } from '../../src/core/ServiceResolverClass.ts';
 
 export class DataService extends AbstractBaseService {
     public env: string;
