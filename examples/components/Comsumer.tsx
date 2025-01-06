@@ -7,8 +7,8 @@ import { LocalStorageService } from '../services/LocalStorageService.ts';
 export const Consumer = ({ children }: {
     children?: React.ReactNode
 }) => {
-    const [simpleService, localStorageService] = useService([DataService,LocalStorageService]);
-    const k = simpleService.getFromLocalStorage('key');
+    const [dataService, localStorageService] = useService([DataService,LocalStorageService]);
+    const k = dataService.getFromLocalStorage('key');
     const l = localStorageService.getItem('key');
 
     return <div> "I'm a sub component 1"
