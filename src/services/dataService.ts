@@ -4,9 +4,11 @@ import { ServicesResolver } from './core/ServiceResolverClass.ts';
 
 export class DataService extends AbstractBaseService {
     public env: string;
-    constructor(provider: ServicesResolver) {
+    public dataType: string;
+    constructor(provider: ServicesResolver, dataType: string) {
         super(provider );
         this.env =  'development';
+        this.dataType = dataType;
     }
     getFromLocalStorage(key: string): string | null {
         const storageService =  this.servicesProvider.getService(LocalStorageService);
