@@ -28,21 +28,16 @@ export class ServicesResolver {
     private addServices(services: Array<ServiceInjectionToken>) {
         services.forEach((service) => {
             if ('useClass' in service) {
-                this._servicesMap.set(service.provide, this.initializeServices(service.useClass));
+                this._servicesMap.set(service.provide, new service.useClass(this));
                 return;
             } else if ('useFactory' in service) {
                 this._servicesMap.set(service.provide, service.useFactory(this));
                 return;
-            } else {
-                this._servicesMap.set(service, this.initializeServices(service));
+            } else if (typeof service === 'function') {
+                this._servicesMap.set(service, new service(this));
             }
         });
     }
 
-
-    private initializeServices(service: ServiceConstructorClass) {
-        const provider = this;
-        return new service(provider);
-    }
 
 }

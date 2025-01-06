@@ -4,7 +4,7 @@ export const ConsumerTwo = ({ children }: {
 }) => {
     return <div> "I'm a sub component 2"
         <div>
-            {'res'}
+
             {children}
         </div></div>;
 };
