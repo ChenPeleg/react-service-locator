@@ -9,10 +9,11 @@ export const Consumer = ({ children }: {
 }) => {
     const [simpleService, localStorageService] = useService([SimpleService,LocalStorageService]);
     const k = simpleService.getFromLocalStorage('key');
+    const l = localStorageService.getItem('key');
 
     return <div> "I'm a sub component 1"
         <div>
-            {k}
+            {k}, {l}
             {children}
         </div></div>;
 };
