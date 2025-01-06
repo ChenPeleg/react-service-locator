@@ -1,8 +1,15 @@
 import { defineConfig } from 'vite'
+
 import react from '@vitejs/plugin-react'
 
-// https://vite.dev/config/
 export default defineConfig({
-  root: 'examples',
+  build: {
+    lib: {
+      entry:  'src/index.ts' ,
+      name: 'react-services-locator',
+      fileName: 'index',
+    },
+  },
+
   plugins: [react()],
 })
