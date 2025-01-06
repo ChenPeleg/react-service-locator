@@ -1,5 +1,5 @@
 import { createContext, ReactNode, useMemo } from 'react';
-import { ResourceProviderConstructor, ServicesResolver } from '../core/ServiceResolverClass.ts';
+import { ServiceConstructorClass, ServicesResolver } from '../core/ServiceResolverClass.ts';
 
 export const GlobalServicesContext = createContext<ServicesResolver>(
     {} as ServicesResolver,
@@ -10,7 +10,7 @@ export const GlobalServicesProvider =
          services,
      }: {
         children: ReactNode;
-        services: ResourceProviderConstructor[];
+        services: ServiceConstructorClass[];
     }) => {
         const servicesSupplierInitialState = useMemo(() => new ServicesResolver(
             services,

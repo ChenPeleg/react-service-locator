@@ -1,4 +1,4 @@
-import { ServicesResolver } from '../resolvers/ServiceResolverClass.ts';
+import { ServicesResolver } from '../core/ServiceResolverClass.ts';
 
 export abstract class AbstractBaseService {
     protected readonly _servicesProvider: ServicesResolver;
