@@ -1,13 +1,13 @@
 import React from 'react';
 import { useService } from '../services/hook/useService.ts';
-import { SimpleService } from '../services/simple.service.ts';
+import { DataService } from '../services/dataService.ts';
 import { LocalStorageService } from '../services/LocalStorageService.ts';
 
 
 export const Consumer = ({ children }: {
     children?: React.ReactNode
 }) => {
-    const [simpleService, localStorageService] = useService([SimpleService,LocalStorageService]);
+    const [simpleService, localStorageService] = useService([DataService,LocalStorageService]);
     const k = simpleService.getFromLocalStorage('key');
     const l = localStorageService.getItem('key');
 

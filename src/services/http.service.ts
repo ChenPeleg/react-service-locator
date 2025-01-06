@@ -1,19 +1,18 @@
+import { AbstractBaseService } from './abstract/AbstractBaseService.ts';
+import { ServicesResolver } from './core/ServiceResolverClass.ts';
 
 
-export class HttpService {
+export class HttpService extends AbstractBaseService {
     public baseUrl: string;
-    constructor(baseUrl : string)
-    {
-        console.log('Http service constructor')
-         this.baseUrl = baseUrl;
+
+    constructor(provider: ServicesResolver, baseUrl: string) {
+        super(provider);
+        this.baseUrl = baseUrl;
     }
-    getStrings() {
-       // const s =  ServiceContainerContext .
-        return ['a', 'b', 'c'];
-    }
+
 
     async get<T>(url: string): Promise<T> {
-        const response = await fetch(url);
+        const response = await fetch(this.baseUrl + url);
         if (!response.ok) {
             throw new Error(response.statusText);
         }

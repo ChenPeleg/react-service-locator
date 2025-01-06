@@ -2,7 +2,7 @@ import { AbstractBaseService } from './abstract/AbstractBaseService.ts';
 import { LocalStorageService } from './LocalStorageService.ts';
 import { ServicesResolver } from './core/ServiceResolverClass.ts';
 
-export class SimpleService extends AbstractBaseService {
+export class DataService extends AbstractBaseService {
     public env: string;
     constructor(provider: ServicesResolver) {
         super(provider );
