@@ -8,13 +8,14 @@ This is a simple service locator for React, my goals while building this library
 
 ## Copy paste
 
-Yes! You've heard correctly, you can copy and paste the code from the `src` folder into your project and start using it.
+Yes! You've read correctly, you can copy and paste the code from the `src` folder into your project and start using it.
 The code is very simple and easy to understand.
 
 ### Why copy and paste you ask?
 
 You can tweak it to your needs, and you can see how it works.
-You don't have to install a library that will be a black box for you.
+You don't have to install a library that will be a black box for you, or worry about support and updates.
+It's just 4 files all together, about 100 lines of typescript code.
 
 ## Installation
 
