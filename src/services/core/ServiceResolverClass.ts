@@ -1,20 +1,16 @@
 import { AbstractBaseService } from '../abstract/AbstractBaseService.ts';
 
 export type ServiceConstructorClass = new (...args: any[]) => AbstractBaseService;
+export type ServiceWithSpecificToken = {
+    provide: any;
+    useClass: ServiceConstructorClass;
+}
 
 export class ServicesResolver {
     private _servicesMap = new Map<any, any>();
-    constructor( services: ServiceConstructorClass[]  ) {
-        services.forEach((service) => {
-            this.addService(service);
-        });
-    }
-    public addService(service: ServiceConstructorClass) {
-        if (this._servicesMap.has(service)) {
-            throw new Error(`Service ${service} already exists`);
-        }
 
-        this._servicesMap.set(service, this.initializeServices(service));
+    constructor(services: Array<ServiceConstructorClass | ServiceWithSpecificToken>) {
+        this.addServices(services);
     }
 
     public getService<T extends ServiceConstructorClass>(service: T): InstanceType<T> {
@@ -23,6 +19,19 @@ export class ServicesResolver {
         }
         return this._servicesMap.get(service) as InstanceType<T>;
     }
+
+    private addServices(services: Array<ServiceConstructorClass | ServiceWithSpecificToken>) {
+        services.forEach((service) => {
+            if ('useClass' in service) {
+                this._servicesMap.set(service.provide, this.initializeServices(service.useClass));
+                return;
+            } else {
+                this._servicesMap.set(service, this.initializeServices(service));
+            }
+        });
+    }
+
+
 
     private initializeServices(service: ServiceConstructorClass) {
         const provider = this;
