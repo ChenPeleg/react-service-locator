@@ -11,7 +11,6 @@ export class ServicesResolver {
         | 'production'
         | string;
     private _servicesMap = new Map<any, any>();
-
     constructor({
                     environment,
                     services,
@@ -50,7 +49,6 @@ export class ServicesResolver {
         if (!this._servicesMap.has(service)) {
             throw new Error(`Service ${service} does not exist`);
         }
-        console.log(this._servicesMap.get(service) )
         return this._servicesMap.get(service) as InstanceType<T>;
     }
 

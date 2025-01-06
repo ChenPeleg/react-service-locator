@@ -1,4 +1,4 @@
-import { createContext, ReactNode, useContext } from 'react';
+import { createContext, ReactNode, useContext, useMemo } from 'react';
 import { ResourceProviderConstructor, ServicesResolver } from '../resolvers/ServiceResolverClass.ts';
 import { appConfig } from '../../appConfig.ts';
 
@@ -15,14 +15,14 @@ export const GlobalServicesProvider =
         children: ReactNode;
         services : ResourceProviderConstructor[];
     }) => {
-        const servicesSupplierInitialState = new ServicesResolver(
+        const servicesSupplierInitialState = useMemo(()=>new ServicesResolver(
             {
                 environment:
                 appConfig
                     .environment,
                 services
             },
-        );
+        ),[services])
 
 
         return (
