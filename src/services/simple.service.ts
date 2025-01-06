@@ -1,12 +1,12 @@
 import { AbstractBaseService } from './abstract/AbstractBaseService.ts';
-import { ServicesResolver } from './resolvers/ServiceResolverClass.ts';
 import { LocalStorageService } from './LocalStorageService.ts';
+import { ServicesResolver } from './core/ServiceResolverClass.ts';
 
 export class SimpleService extends AbstractBaseService {
     public env: string;
     constructor(provider: ServicesResolver) {
         super(provider );
-        this.env = provider .environment;
+        this.env =  'development';
     }
     getFromLocalStorage(key: string): string | null {
         const storageService =  this.servicesProvider.getService(LocalStorageService);

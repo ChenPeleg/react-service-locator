@@ -1,29 +1,23 @@
-import { useState } from 'react'
-import './App.css'
+import './App.css';
 import { Consumer } from './components/Comsumer.tsx';
 import { ConsumerTwo } from './components/ComsumerTwo.tsx';
+import { LocalStorageService } from './services/LocalStorageService.ts';
+import { SimpleService } from './services/simple.service.ts';
+import { GlobalServicesProvider } from './services/context/GlobalServicesContext.tsx';
 
 function App() {
-  const [count, setCount] = useState(0)
 
-  return (
-    <>
-      <h1>React Service Locator pattern</h1>
-        <Consumer />
-        <ConsumerTwo/>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    return (
+
+        <GlobalServicesProvider services={[LocalStorageService, SimpleService]}>
+            <h1>React Service Locator pattern</h1>
+            <Consumer />
+            <ConsumerTwo />
+
+
+        </GlobalServicesProvider>
+
+    );
 }
 
-export default App
+export default App;

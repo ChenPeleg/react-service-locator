@@ -1,5 +1,6 @@
 import { AbstractBaseService } from './abstract/AbstractBaseService.ts';
-import { ServicesResolver } from './resolvers/ServiceResolverClass.ts';
+import { ServicesResolver } from './core/ServiceResolverClass.ts';
+
 
 export class LocalStorageService extends AbstractBaseService {
     public static readonly STYLE_SETTINGS = 'app_sorcery_style_settings';
