@@ -1,8 +1,16 @@
-
-import { GlobalServicesContext  } from '../context/GlobalServicesContext.tsx';
+import { GlobalServicesContext } from '../context/GlobalServicesContext.tsx';
 import { ServiceConstructorClass } from '../core/ServiceResolverClass.ts';
 import { useContext } from 'react';
-export const useService =<T extends ServiceConstructorClass> (serviceClass : T) :InstanceType<T>=> {
+
+// Overload signatures
+export function useService<T extends ServiceConstructorClass>(serviceClass: T): InstanceType<T>;
+export function useService<T extends ServiceConstructorClass>(serviceClass: T[]): InstanceType<T>[];
+
+
+export function useService<T extends ServiceConstructorClass>(serviceClass: T | T[]) {
     const services = useContext(GlobalServicesContext);
-    return  services.getService(serviceClass)  as InstanceType<T> ;
-};
+    if (Array.isArray(serviceClass)) {
+        return serviceClass.map((service) => services.getService(service)) as InstanceType<T>[];
+    }
+    return services.getService(serviceClass) as InstanceType<T>;
+}
