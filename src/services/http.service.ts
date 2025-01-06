@@ -1,10 +1,14 @@
 
+
 export class HttpService {
     public baseUrl: string;
-    constructor(baseUrl : string) {
+    constructor(baseUrl : string)
+    {
+        console.log('Http service constructor')
          this.baseUrl = baseUrl;
     }
     getStrings() {
+       // const s =  ServiceContainerContext .
         return ['a', 'b', 'c'];
     }
 
