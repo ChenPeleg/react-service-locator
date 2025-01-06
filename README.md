@@ -26,5 +26,37 @@ npm install react-service-locator
 
 ### How to use
 
+#### Create a service
+
+Create a service by extending the `AbstractBaseService` class:
+
+```typescript 
+    export class DataService extends AbstractBaseService {
+        constructor(provider: ServicesResolver) {
+            super(provider);
+        }
+        setItem(key, value) {
+            localStorage.setItem(key, value);
+        }
+        getItem(key) {
+            return localStorage.getItem(key);
+        }
+    }
+```
+
+Add the `ServiceLocatorProvider` to the root of your application:
+
+```jsx
+import React from 'react';
+
+import { ServiceLocatorProvider } from 'react-service-locator';
+    <ServicesProvider
+            services={[
+                LocalStorageService,
+                DataService ]}> 
+            <Consumer /> 
+
+        </ServicesProvider>
+```
 
 

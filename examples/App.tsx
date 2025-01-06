@@ -1,6 +1,5 @@
-
 import { Consumer } from './components/Comsumer.tsx';
-import { ConsumerTwo } from './components/ComsumerTwo.tsx';
+
 import { LocalStorageService } from './services/LocalStorageService.ts';
 import { DataService } from './services/dataService.ts';
 import { ServicesProvider } from '../src/ServicesProvider.tsx';
@@ -20,7 +19,6 @@ function App() {
                 }]}>
             <h1>React Service Locator pattern</h1>
             <Consumer />
-            <ConsumerTwo />
 
         </ServicesProvider>
 
