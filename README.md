@@ -46,13 +46,11 @@ Add the `ServiceLocatorProvider` to the root of your application:
 
 ```tsx
 import React from 'react';
-
 import { ServiceLocatorProvider } from 'react-service-locator';
 
 <ServicesProvider
     services={[DataService]}>
     <Consumer />
-
 </ServicesProvider>
 ```
 
@@ -108,4 +106,35 @@ Add the `ProfileDataService` to the `ServiceLocatorProvider`:
 
 ```tsx
 import React from 'react';
+import { ServiceLocatorProvider } from 'react-service-locator';
 
+<ServicesProvider
+    services={[DataService,ProfileDataService]}>
+    <Consumer />
+</ServicesProvider>
+```
+
+And use the hook in the `Consumer` component:
+
+ 
+```tsx
+export const Consumer = () => {
+    const [dataService, prophileDataService] = useService([DataService,ProfileDataService]);
+    
+    const [data, setData] = useState(null);
+    const [prophileData, setProphileData] = useState(null);
+    useEffect(() => {
+        dataService.getData('https://getmydata.com').then((data) => {
+            setData(data);
+        });
+        prophileDataService.getProphileData().then((data) => {
+            setProphileData(data);
+        });
+    }, []);
+    
+    return <div>
+        {data}
+        {prophileData}
+       </div>;
+};
+```
