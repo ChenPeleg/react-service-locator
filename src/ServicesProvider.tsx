@@ -1,25 +1,25 @@
 import { createContext, ReactNode, useMemo } from 'react';
-import { ServiceConstructorClass, ServicesResolver } from '../core/ServiceResolverClass.ts';
+import {   ServiceInjectionMethod, ServicesResolver } from './ServiceResolverClass.ts';
 
-export const GlobalServicesContext = createContext<ServicesResolver>(
+export const ServicesProviderContext = createContext<ServicesResolver>(
     {} as ServicesResolver,
 );
-export const GlobalServicesProvider =
+export const ServicesProvider =
     ({
          children,
          services,
      }: {
         children: ReactNode;
-        services: ServiceConstructorClass[];
+        services: ServiceInjectionMethod[];
     }) => {
         const servicesSupplierInitialState = useMemo(() => new ServicesResolver(
             services,
         ), [services]);
 
         return (
-            <GlobalServicesContext.Provider value={servicesSupplierInitialState}>
+            <ServicesProviderContext.Provider value={servicesSupplierInitialState}>
                 {children}
-            </GlobalServicesContext.Provider>
+            </ServicesProviderContext.Provider>
         );
     };
 

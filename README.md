@@ -1,50 +1,141 @@
-# React + TypeScript + Vite
+# React service locator
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is a simple service locator for React, my goals while building this library were:
 
-Currently, two official plugins are available:
+1. To have a centered place to store all the services that my application needs.
+2. Services can use other services (Almost proper Dependency injection).
+3. To make it easy to understand so that you can copy and paste it into your project and start using it.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Copy paste
 
-## Expanding the ESLint configuration
+Yes! You've read correctly, you can copy and paste the code from the `src` folder into your project and start using it.
+The code is very simple and easy to understand.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+### Why copy and paste you ask?
 
-- Configure the top-level `parserOptions` property like this:
+You can tweak it to your needs, and you can see how it works.
+You don't have to install a library that will be a black box for you, or worry about support and updates.
+It's just 4 files all together, about 100 lines of typescript code.
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+## Installation
+
+Of course, you can install it via npm:
+
+```shell
+npm install react-service-locator
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+### Basic usage
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+#### Create a service
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
+Create a service by extending the `AbstractBaseService` class:
+
+```typescript 
+export class DataService extends AbstractBaseService {
+    constructor(provider: ServicesResolver) {
+        super(provider);
+    }
+    getData(url) {
+         // fetch data from the url
+    }
+}
+```
+#### Add the `ServiceLocatorProvider`
+
+Add the `ServiceLocatorProvider` to the root of your application:
+
+```tsx
+import React from 'react';
+import { ServiceLocatorProvider } from 'react-service-locator';
+
+<ServicesProvider
+    services={[DataService]}>
+    <Consumer />
+</ServicesProvider>
+```
+
+#### Use the useService hook
+
+
+```tsx
+export const Consumer = () => {
+    const dataService = useService(DataService);
+    
+    const [data, setData] = useState(null);
+    
+    useEffect(() => {
+        dataService.getData('https://getmydata.com').then((data) => {
+            setData(data);
+        });
+    }, []);
+    
+    return <div>
+        {data}
+       </div>;
+};
+```
+### Service Dependency usage
+
+create a new service that depends on the `DataService`:
+
+```typescript
+import { DataService } from './dataService';
+
+export class ProfileDataService extends AbstractBaseService {
+    constructor(provider: ServicesResolver) {
+        super(provider);
+    }
+
+    async getProphileData() {
+      const dataService =  this.servicesProvider.getService(DataService)
+      dataService.getData('https://getmydata.com/prohile');
+    }
+}
+```
+
+Notice the `AbstractBaseService` class has a `servicesProvider` property that you can use to get other services.
+
+As you can see, the `ProfileDataService` depends on the `DataService` service.
+This is not classic Dependency Injection, but it's close enough:
+The main difference is that it's lazy-loaded, so you don't have to worry about the order of the services.
+
+> This means you can't use get Other services inside the service class constructor. Because the services are not yet registered.
+
+
+Add the `ProfileDataService` to the `ServiceLocatorProvider`:
+
+```tsx
+import React from 'react';
+import { ServiceLocatorProvider } from 'react-service-locator';
+
+<ServicesProvider
+    services={[DataService,ProfileDataService]}>
+    <Consumer />
+</ServicesProvider>
+```
+
+And use the hook in the `Consumer` component:
+
+ 
+```tsx
+export const Consumer = () => {
+    const [dataService, prophileDataService] = useService([DataService,ProfileDataService]);
+    
+    const [data, setData] = useState(null);
+    const [prophileData, setProphileData] = useState(null);
+    useEffect(() => {
+        dataService.getData('https://getmydata.com').then((data) => {
+            setData(data);
+        });
+        prophileDataService.getProphileData().then((data) => {
+            setProphileData(data);
+        });
+    }, []);
+    
+    return <div>
+        {data}
+        {prophileData}
+       </div>;
+};
 ```
