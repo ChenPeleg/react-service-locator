@@ -5,11 +5,16 @@ export type ServiceWithSpecificToken = {
     provide: any;
     useClass: ServiceConstructorClass;
 }
+export type ServiceWithFactoryFunction = {
+    provide: any;
+    useFactory: (serviceResolver: ServicesResolver) => ServiceConstructorClass;
+}
+export type ServiceInjectionToken = ServiceConstructorClass | ServiceWithSpecificToken | ServiceWithFactoryFunction;
 
 export class ServicesResolver {
     private _servicesMap = new Map<any, any>();
 
-    constructor(services: Array<ServiceConstructorClass | ServiceWithSpecificToken>) {
+    constructor(services: Array<ServiceInjectionToken>) {
         this.addServices(services);
     }
 
@@ -20,17 +25,19 @@ export class ServicesResolver {
         return this._servicesMap.get(service) as InstanceType<T>;
     }
 
-    private addServices(services: Array<ServiceConstructorClass | ServiceWithSpecificToken>) {
+    private addServices(services: Array<ServiceInjectionToken>) {
         services.forEach((service) => {
             if ('useClass' in service) {
                 this._servicesMap.set(service.provide, this.initializeServices(service.useClass));
+                return;
+            } else if ('useFactory' in service) {
+                this._servicesMap.set(service.provide, service.useFactory(this));
                 return;
             } else {
                 this._servicesMap.set(service, this.initializeServices(service));
             }
         });
     }
-
 
 
     private initializeServices(service: ServiceConstructorClass) {
