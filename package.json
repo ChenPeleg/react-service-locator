@@ -2,11 +2,27 @@
   "name": "react-services-locator",
   "private": false,
   "version": "0.0.2",
+  "description": "react services locator",
+  "author": {
+    "name": "Chen Peleg",
+    "email": "chenpeleg@gmail.com"
+  },
+  "main": "dist/index.js",
+  "files": [
+    "src/**/*"
+  ],
+
+  "keywords": [
+    "react",
+    "vanilla",
+    "services",
+    "service-locator",
+    "dependency-injection"
+  ],
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "lint": "eslint .",
-    "preview": "vite preview"
+    "lint": "eslint ."
   },
   "dependencies": {
   },
