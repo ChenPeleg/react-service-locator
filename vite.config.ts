@@ -7,7 +7,7 @@ export default defineConfig({
   build: {
     lib: {
       entry: "./src/index.ts",
-      name: "vite-react-ts-button",
+      name: "react-services-locator",
       fileName: (format) => `index.${format}.js`,
       formats: ["cjs", "es"]
     },
@@ -15,7 +15,7 @@ export default defineConfig({
       external: [...Object.keys(peerDependencies)]
     },
     sourcemap: true,
-    outDir: "dist"
+    emptyOutDir: true
   },
   plugins: [dts()]
 });
