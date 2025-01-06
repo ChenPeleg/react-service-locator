@@ -28,7 +28,7 @@ It's just 4 files all together, about 100 lines of typescript code.
 Of course, you can install it via npm:
 
 ```shell
-npm install react-service-locator
+npm install react-services-locator
 ```
 
 ### Basic usage
@@ -53,7 +53,7 @@ Add the `ServiceLocatorProvider` to the root of your application:
 
 ```tsx
 import React from 'react';
-import { ServiceLocatorProvider } from 'react-service-locator';
+import { ServiceLocatorProvider } from 'react-services-locator';
 
 <ServicesProvider
     services={[DataService]}>
@@ -113,7 +113,7 @@ Add the `ProfileDataService` to the `ServiceLocatorProvider`:
 
 ```tsx
 import React from 'react';
-import { ServiceLocatorProvider } from 'react-service-locator';
+import { ServiceLocatorProvider } from 'react-services-locator';
 
 <ServicesProvider
     services={[DataService,ProfileDataService]}>

@@ -15,7 +15,7 @@ export default defineConfig({
       external: [...Object.keys(peerDependencies)]
     },
     sourcemap: true,
-    emptyOutDir: true
+    outDir: "dist"
   },
   plugins: [dts()]
 });
