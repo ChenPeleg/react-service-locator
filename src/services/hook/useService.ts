@@ -1,4 +1,4 @@
-import { GlobalServicesContext } from '../context/GlobalServicesContext.tsx';
+import {  ServicesProviderContext } from '../context/ServicesProvider.tsx';
 import { ServiceConstructorClass } from '../core/ServiceResolverClass.ts';
 import { useContext } from 'react';
 
@@ -8,7 +8,7 @@ export function useService<T extends ServiceConstructorClass[]>(serviceClass: [.
 
 
 export function useService<T extends ServiceConstructorClass>(serviceClass: T | T[]) {
-    const services = useContext(GlobalServicesContext);
+    const services = useContext(ServicesProviderContext);
     if (Array.isArray(serviceClass)) {
         return serviceClass.map((service) => services.getService(service)) as any;
     }

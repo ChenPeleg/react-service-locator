@@ -3,19 +3,27 @@ import { Consumer } from './components/Comsumer.tsx';
 import { ConsumerTwo } from './components/ComsumerTwo.tsx';
 import { LocalStorageService } from './services/LocalStorageService.ts';
 import { DataService } from './services/dataService.ts';
-import { GlobalServicesProvider } from './services/context/GlobalServicesContext.tsx';
+import { ServicesProvider } from './services/context/ServicesProvider.tsx';
+import { HttpService } from './services/http.service.ts';
 
 function App() {
 
     return (
 
-        <GlobalServicesProvider services={[LocalStorageService, DataService]}>
+        <ServicesProvider
+            services={[
+                LocalStorageService,
+                DataService,
+                {
+                    provide: HttpService,
+                    useFactory: (provider) => new HttpService(provider, 'https://jsonplaceholder.typicode.com'),
+                }]}>
             <h1>React Service Locator pattern</h1>
             <Consumer />
             <ConsumerTwo />
 
 
-        </GlobalServicesProvider>
+        </ServicesProvider>
 
     );
 }
