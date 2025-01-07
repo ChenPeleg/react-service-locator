@@ -1,11 +1,11 @@
 import { AbstractBaseService } from '../../src/AbstractBaseService.ts';
-import { ServicesResolver } from '../../src/ServiceResolverClass.ts';
+import { ServicesProvider } from '../../src/ServiceResolverClass.ts';
 
 
 export class HttpService extends AbstractBaseService {
     public baseUrl: string;
 
-    constructor(provider: ServicesResolver, baseUrl: string) {
+    constructor(provider: ServicesProvider, baseUrl: string) {
         super(provider);
         this.baseUrl = baseUrl;
     }

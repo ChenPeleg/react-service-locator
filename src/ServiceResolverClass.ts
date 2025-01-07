@@ -7,11 +7,11 @@ export type ServiceWithSpecificToken = {
 }
 export type ServiceWithFactoryFunction = {
     provide: unknown;
-    useFactory: (serviceResolver: ServicesResolver) => AbstractBaseService;
+    useFactory: (serviceProvider: ServicesProvider) => AbstractBaseService;
 }
 export type ServiceInjectionMethod = ServiceConstructorClass | ServiceWithSpecificToken | ServiceWithFactoryFunction;
 
-export class ServicesResolver {
+export class ServicesProvider {
     private _servicesMap = new Map<unknown, InstanceType<ServiceConstructorClass>>();
 
     constructor(services: Array<ServiceInjectionMethod>) {
@@ -37,7 +37,7 @@ export class ServicesResolver {
                 console.log(service.prototype instanceof AbstractBaseService);
                 this._servicesMap.set(service, new service(this));
             } else {
-                throw new Error('[ServicesResolver] Invalid service definition');
+                throw new Error('[ServicesProvider] Invalid service definition');
             }
         });
     }

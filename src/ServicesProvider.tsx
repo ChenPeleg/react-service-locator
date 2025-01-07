@@ -1,9 +1,9 @@
 import { createContext, ReactNode, useMemo } from 'react';
-import {   ServiceInjectionMethod, ServicesResolver } from './ServiceResolverClass.ts';
+import {   ServiceInjectionMethod, ServicesProvider } from './ServiceResolverClass.ts';
 
 // eslint-disable-next-line react-refresh/only-export-components
-export const ServicesProviderContext = createContext<ServicesResolver>(
-    {} as ServicesResolver,
+export const ServicesProviderContext = createContext<ServicesProvider>(
+    {} as ServicesProvider,
 );
 export const ServicesProvider =
     ({
@@ -13,7 +13,7 @@ export const ServicesProvider =
         children: ReactNode;
         services: ServiceInjectionMethod[];
     }) => {
-        const servicesSupplierInitialState = useMemo(() => new ServicesResolver(
+        const servicesSupplierInitialState = useMemo(() => new ServicesProvider(
             services,
         ), [services]);
 

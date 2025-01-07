@@ -1,28 +1,28 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { ServicesProviderContext } from '../../src/ServicesProvider';
-import { ServicesResolver } from '../../src/ServiceResolverClass';
+import { ServicesProvider } from '../../src/ServiceResolverClass';
 import { useService } from '../../src/useService';
 import { AbstractBaseService } from '../../src/AbstractBaseService';
 import React from 'react';
 import { renderHook } from '@testing-library/react';
 
 class TestService extends AbstractBaseService {
-    constructor(servicesProvider: ServicesResolver) {
+    constructor(servicesProvider: ServicesProvider) {
         super(servicesProvider);
     }
 }
 
 class AnotherTestService extends AbstractBaseService {
-    constructor(servicesProvider: ServicesResolver) {
+    constructor(servicesProvider: ServicesProvider) {
         super(servicesProvider);
     }
 }
 
 describe('useService', () => {
-    let servicesResolver: ServicesResolver;
+    let servicesResolver: ServicesProvider;
 
     beforeEach(() => {
-        servicesResolver = new ServicesResolver([TestService, AnotherTestService]);
+        servicesResolver = new ServicesProvider([TestService, AnotherTestService]);
     });
 
     it('should retrieve a service by class', () => {
@@ -68,7 +68,7 @@ describe('useService', () => {
         } catch (error) {
             expect(error).toBeDefined();
             // @ts-ignore
-            expect(error.message).toBe('[ServicesResolver] Service NonExistentService does not exist');
+            expect(error.message).toBe('[ServicesProvider] Service NonExistentService does not exist');
         }
     });
 });

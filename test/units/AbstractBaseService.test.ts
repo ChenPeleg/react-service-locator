@@ -1,9 +1,9 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { AbstractBaseService } from '../../src/AbstractBaseService';
-import { ServicesResolver } from '../../src/ServiceResolverClass';
+import { ServicesProvider } from '../../src/ServiceResolverClass';
 
 class TestService extends AbstractBaseService {
-    constructor(servicesProvider: ServicesResolver) {
+    constructor(servicesProvider: ServicesProvider) {
         super(servicesProvider);
     }
     public getServiceProvider() {
@@ -12,11 +12,11 @@ class TestService extends AbstractBaseService {
 }
 
 describe('AbstractBaseService', () => {
-    let servicesResolver: ServicesResolver;
+    let servicesResolver: ServicesProvider;
     let testService: TestService;
 
     beforeEach(() => {
-        servicesResolver = new ServicesResolver([]);
+        servicesResolver = new ServicesProvider([]);
         testService = new TestService(servicesResolver);
     });
 
@@ -25,6 +25,6 @@ describe('AbstractBaseService', () => {
     });
 
     it('should return the correct services provider', () => {
-        expect(testService.getServiceProvider()).toBeInstanceOf(ServicesResolver);
+        expect(testService.getServiceProvider()).toBeInstanceOf(ServicesProvider);
     });
 });
