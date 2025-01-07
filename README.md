@@ -5,7 +5,7 @@
 
 # React service locator
 
-This version is not stable yet, I'm still working on it.
+A very simple (yet effective) implementation of the [service locator pattern](https://en.wikipedia.org/wiki/Service_locator_pattern) for React 18+ using Hooks, Context API
 
 ## Features
 
@@ -17,18 +17,22 @@ This is a simple service locator for React, my goals while building this library
 2. Services can use other services (Almost proper Dependency injection).
 3. To make it easy to understand so that you can copy and paste it into your project and start using it.
 
-## Copy paste
+## How to use
+## Recommended: Copy and paste
 
 Yes! You've read correctly, you can copy and paste the code from the `src` folder into your project and start using it.
 The code is very simple and easy to understand.
 
 ### Why copy and paste you ask?
 
-You can tweak it to your needs, and you can see how it works.
-You don't have to install a library that will be a black box for you, or worry about support and updates.
-It's just 4 files all together, about 100 lines of typescript code.
+1. You can tweak it to your needs
+2. you can see exactly how it works.
+3. You don't have to install a library that will make you worry about support and updates.
+4. It's just 4 files all together, about 100 lines of (relatively readable) typescript code.
 
-## Installation
+If you're not convinced, you can install it via npm:
+
+##  Npm Installation
 
 Of course, you can install it via npm:
 
