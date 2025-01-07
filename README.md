@@ -46,7 +46,7 @@ npm install react-services-locator
 Create a service by extending the `AbstractBaseService` class:
 
 ```typescript 
-import { AbstractBaseService  } from 'react-services-locator'
+import { AbstractBaseService, ServicesResolver } from 'react-services-locator'
 export class DataService extends AbstractBaseService {
     constructor(provider: ServicesResolver) {
         super(provider);
@@ -56,6 +56,9 @@ export class DataService extends AbstractBaseService {
     }
 }
 ```
+Note that the class should extend the `AbstractBaseService` class and have a constructor that receives the `ServicesResolver` as an argument.
+
+
 #### Add the `ServiceLocatorProvider`
 
 Add the `ServiceLocatorProvider` to the root of your application:
@@ -73,6 +76,7 @@ import { ServiceLocatorProvider } from 'react-services-locator';
 
 #### Use the useService hook
 
+In your components, use the `useService` hook to get the service instance:
 
 ```tsx
 import { useService  } from 'react-services-locator'
@@ -95,8 +99,8 @@ export const Consumer = () => {
 ```
 
 ### Service Dependency usage
-
-create a new service that depends on the `DataService`:
+The purpose of the service locator is to allow services to depend on other services.
+To demonstrate this, let's create a new service that depends on the `DataService`:
 
 ```typescript
 import { DataService } from './dataService';
@@ -107,20 +111,22 @@ export class ProfileDataService extends AbstractBaseService {
     }
 
     async getProphileData() {
+      // use this servicesProvider.getService to get other services  
       const dataService =  this.servicesProvider.getService(DataService)
       dataService.getData('https://getmydata.com/prohile');
     }
 }
 ```
 
-Notice the `AbstractBaseService` class has a `servicesProvider` property that you can use to get other services.
+Notice the `AbstractBaseService` class has a `servicesProvider` property that you can use to get other services. 
+This property is injected by the `ServiceLocatorProvider`, and has only one method: `getService`.
 
 As you can see, the `ProfileDataService` depends on the `DataService` service.
 This is not classic Dependency Injection, but it's close enough:
 The main difference is that it's lazy-loaded, so you don't have to worry about the order of the services.
 
 > [!IMPORTANT] 
-> This means you can't use get Other services inside the service class constructor. Because the services are not yet registered.
+> This also means you can't use get Other services **inside the service class constructor**. Because the services are not yet registered.
 
 
 Add the `ProfileDataService` to the `ServiceLocatorProvider`:
@@ -160,7 +166,7 @@ export const Consumer = () => {
 };
 ```
 
-### Advanced usage - useClass (for testing)
+### Advanced usage - useClass (mainly for testing)
 
 You can use the `ServiceLocatorProvider` to provide a different service implementation for testing purposes:
 
@@ -176,7 +182,7 @@ export class MockDataService extends AbstractBaseService {
         return Promise.resolve('mocked data');
     }
 }
-
+// for testing purposes
 <ServicesProvider
     services={[{ provide: DataService, useClass : MockDataService },ProfileDataService]}>
     <Consumer />
@@ -189,7 +195,7 @@ The Consumer component will now use the `MockDataService` service instead of the
 
 ### Advanced usage - Factory function (for complex initialization)
 
-You can use a factory function to create a service instance:
+You can use a factory function to create a service instance, this can be useful when you need to pass arguments to the service constructor:
 
 ```tsx
 import React from 'react';
