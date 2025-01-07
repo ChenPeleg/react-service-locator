@@ -119,6 +119,7 @@ As you can see, the `ProfileDataService` depends on the `DataService` service.
 This is not classic Dependency Injection, but it's close enough:
 The main difference is that it's lazy-loaded, so you don't have to worry about the order of the services.
 
+> > [!IMPORTANT] 
 > This means you can't use get Other services inside the service class constructor. Because the services are not yet registered.
 
 
@@ -209,15 +210,11 @@ export class HttpService extends AbstractBaseService {
     <Consumer />
 </ServicesProvider>
 ```
-> > [!IMPORTANT] 
+> [!IMPORTANT] 
 > Notice that the factory function receives the `ServicesResolver` as a first argument, so all other arguments should come after it.
 
 
-## Todo
-- add jsdoc notations 
-- add more examples
-- add more documentation about complex usage
-
+ 
 
 ## Inspiration
 
