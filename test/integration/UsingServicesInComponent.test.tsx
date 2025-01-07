@@ -1,8 +1,8 @@
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
 
-import { AbstractBaseService } from '../../src/AbstractBaseService';
-import { useService } from '../../src/useService';
+import { AbstractBaseService } from '../../src';
+import { useService } from '../../src';
 import { ServicesProvider, ServicesResolver } from '../../src';
 
 class TestService extends AbstractBaseService {
@@ -58,7 +58,24 @@ describe('ServicesProvider Integration Tests', () => {
         expect(screen.getByText('TestService Value')).toBeTruthy();
         expect(screen.getByText('AnotherTestService Value')).toBeTruthy();
     });
+    it('should throw an error when a non-listed service is used', () => {
+        const NonExistentServiceComponent = () => {
+            try {
+                useService(AnotherTestService);
+            } catch (error) {
+                // @ts-expect-error Testing error message
+                return <div>{error.message}</div>;
+            }
+            return null;
+        };
 
+        render(
+            <ServicesProvider services={[TestService]}>
+                <NonExistentServiceComponent />
+            </ServicesProvider>
+        );
+        expect(screen.getByText('[ServicesResolver] Service AnotherTestService does not exist')).toBeTruthy();
+    });
     it('should throw an error when a non-existent service is used', () => {
         const NonExistentServiceComponent = () => {
             try {
@@ -77,6 +94,6 @@ describe('ServicesProvider Integration Tests', () => {
                 <NonExistentServiceComponent />
             </ServicesProvider>
         );
-        expect(screen.getByText('[ServicesProvider] Service NonExistentService does not exist')).toBeTruthy();
+        expect(screen.getByText('[ServicesResolver] Service NonExistentService does not exist')).toBeTruthy();
     });
 });
