@@ -1,18 +1,18 @@
 import { AbstractBaseService } from './AbstractBaseService.ts';
-
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type ServiceConstructorClass = new (...args: any[]) => AbstractBaseService;
 export type ServiceWithSpecificToken = {
-    provide: any;
+    provide: unknown;
     useClass: ServiceConstructorClass;
 }
 export type ServiceWithFactoryFunction = {
-    provide: any;
+    provide: unknown;
     useFactory: (serviceResolver: ServicesResolver) => AbstractBaseService;
 }
 export type ServiceInjectionMethod = ServiceConstructorClass | ServiceWithSpecificToken | ServiceWithFactoryFunction;
 
 export class ServicesResolver {
-    private _servicesMap = new Map<any, any>();
+    private _servicesMap = new Map<unknown, InstanceType<ServiceConstructorClass>>();
 
     constructor(services: Array<ServiceInjectionMethod>) {
         this.addServices(services);
@@ -20,7 +20,7 @@ export class ServicesResolver {
 
     public getService<T extends ServiceConstructorClass>(service: T): InstanceType<T> {
         if (!this._servicesMap.has(service)) {
-            throw new Error(`[ServicesResolver] Service  ${service.name || service} does not exist`);
+            throw new Error(`[ServicesResolver] Service ${service.name || service} does not exist`);
         }
         return this._servicesMap.get(service) as InstanceType<T>;
     }

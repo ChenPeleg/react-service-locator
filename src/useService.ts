@@ -10,7 +10,7 @@ export function useService<T extends ServiceConstructorClass[]>(serviceClass: [.
 export function useService<T extends ServiceConstructorClass>(serviceClass: T | T[]) {
     const services = useContext(ServicesProviderContext);
     if (Array.isArray(serviceClass)) {
-        return serviceClass.map((service) => services.getService(service)) as any;
+        return serviceClass.map((service) => services.getService(service))  ;
     }
     return services.getService(serviceClass) as InstanceType<T>;
 }
