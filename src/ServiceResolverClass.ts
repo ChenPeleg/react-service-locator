@@ -1,18 +1,18 @@
 import { AbstractBaseService } from './AbstractBaseService.ts';
 
-export type ServiceConstructorClass = new (...args: any[]) => AbstractBaseService;
+export type ServiceConstructorClass = new (...args: unknown[]) => AbstractBaseService;
 export type ServiceWithSpecificToken = {
-    provide: any;
+    provide: unknown;
     useClass: ServiceConstructorClass;
 }
 export type ServiceWithFactoryFunction = {
-    provide: any;
+    provide: unknown;
     useFactory: (serviceResolver: ServicesResolver) => AbstractBaseService;
 }
 export type ServiceInjectionMethod = ServiceConstructorClass | ServiceWithSpecificToken | ServiceWithFactoryFunction;
 
 export class ServicesResolver {
-    private _servicesMap = new Map<any, any>();
+    private _servicesMap = new Map<unknown, InstanceType<ServiceConstructorClass>>();
 
     constructor(services: Array<ServiceInjectionMethod>) {
         this.addServices(services);
