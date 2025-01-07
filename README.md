@@ -38,6 +38,7 @@ npm install react-services-locator
 Create a service by extending the `AbstractBaseService` class:
 
 ```typescript 
+import { AbstractBaseService  } from 'react-services-locator'
 export class DataService extends AbstractBaseService {
     constructor(provider: ServicesResolver) {
         super(provider);
@@ -53,6 +54,7 @@ Add the `ServiceLocatorProvider` to the root of your application:
 
 ```tsx
 import React from 'react';
+
 import { ServiceLocatorProvider } from 'react-services-locator';
 
 <ServicesProvider
@@ -87,7 +89,7 @@ create a new service that depends on the `DataService`:
 
 ```typescript
 import { DataService } from './dataService';
-
+import { AbstractBaseService  } from 'react-services-locator'
 export class ProfileDataService extends AbstractBaseService {
     constructor(provider: ServicesResolver) {
         super(provider);
@@ -113,7 +115,7 @@ Add the `ProfileDataService` to the `ServiceLocatorProvider`:
 
 ```tsx
 import React from 'react';
-import { ServiceLocatorProvider } from 'react-services-locator';
+import { ServicesProvider } from 'react-services-locator';
 
 <ServicesProvider
     services={[DataService,ProfileDataService]}>
@@ -148,7 +150,7 @@ export const Consumer = () => {
 
 
 ## Todo
-
+- add jsdoc notations
 - add tests
 - add more examples
 - add more documentation about complex usage

@@ -1,21 +1,28 @@
-import { defineConfig } from 'vite'
-
-import dts from "vite-plugin-dts";
-import { peerDependencies } from "./package.json";
+import { defineConfig } from 'vite';
+import dts from 'vite-plugin-dts';
+import { peerDependencies } from './package.json';
 
 export default defineConfig({
-  build: {
-    lib: {
-      entry: "./src/index.ts",
-      name: "vite-react-ts-button",
-      fileName: (format) => `index.${format}.js`,
-      formats: ["cjs", "es"]
+    build: {
+        lib: {
+            entry: './src/index.ts',
+            name: 'react-services-locator',
+            fileName: () => `index.js`,
+            formats: ['es'],
+        },
+        rollupOptions: {
+            external: [...Object.keys(peerDependencies)],
+        },
+        sourcemap: true,
+        emptyOutDir: true,
     },
-    rollupOptions: {
-      external: [...Object.keys(peerDependencies)]
-    },
-    sourcemap: true,
-    outDir: "dist"
-  },
-  plugins: [dts()]
+    plugins: [
+        dts({
+            outDir: 'dist',
+            insertTypesEntry: true,
+            cleanVueFileName: true,
+            rollupTypes: true,
+            tsconfigPath: './tsconfig.app.json',
+        }),
+    ],
 });
