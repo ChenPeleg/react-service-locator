@@ -1,8 +1,8 @@
 import { describe, it, expect, beforeEach } from 'vitest';
-import { ServicesProviderContext } from '../../src/ServicesProvider';
-import { ServicesResolver } from '../../src/ServiceResolverClass';
-import { useService } from '../../src/useService';
-import { AbstractBaseService } from '../../src/AbstractBaseService';
+import { ServicesProviderContext } from '../../src';
+import { ServicesResolver } from '../../src';
+import { useService } from '../../src';
+import { AbstractBaseService } from '../../src';
 import React from 'react';
 import { renderHook } from '@testing-library/react';
 

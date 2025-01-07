@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { ServicesResolver, ServiceConstructorClass, ServiceWithSpecificToken, ServiceWithFactoryFunction } from '../../src/ServiceResolverClass';
-import { AbstractBaseService } from '../../src/AbstractBaseService';
+import { AbstractBaseService } from '../../src';
 
 class TestService extends AbstractBaseService {
     constructor(servicesProvider: ServicesResolver) {
