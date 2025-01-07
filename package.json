@@ -23,7 +23,6 @@
     "dev": "vite",
     "lint": "eslint .",
     "build": "tsc && vite build",
-    "build-dts": "tsc src/index.ts --declaration",
     "lint:fix": "eslint --fix ."
   },
   "peerDependencies": {
