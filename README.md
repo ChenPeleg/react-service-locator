@@ -3,8 +3,8 @@
 [![Licence](https://img.shields.io/github/license/ChenPeleg/react-services-locator.svg?style=flat&colorA=18181B&colorB=28CF8D)](https://github.com/ChenPeleg/react-services-locator/LICENCE)
 
 
-# React service locator
-
+# React services locator
+ 
 A very simple (yet effective) implementation of the [service locator pattern](https://en.wikipedia.org/wiki/Service_locator_pattern) for React 18+ using Hooks, Context API
 
 ## Features
@@ -18,10 +18,9 @@ This is a simple service locator for React, my goals while building this library
 3. To make it easy to understand so that you can copy and paste it into your project and start using it.
 
 ## How to use
-## Recommended: Copy and paste
+## Recommended: Copy and paste 📋
 
-Yes! You've read correctly, you can copy and paste the code from the `src` folder into your project and start using it.
-The code is very simple and easy to understand.
+You can directly copy and paste the code from the `src` folder into your project and start using it. The code is designed to be simple and easy to read.
 
 ### Why copy and paste you ask?
 
@@ -76,6 +75,8 @@ import { ServiceLocatorProvider } from 'react-services-locator';
 
 
 ```tsx
+import { useService  } from 'react-services-locator'
+
 export const Consumer = () => {
     const dataService = useService(DataService);
     
@@ -92,6 +93,7 @@ export const Consumer = () => {
        </div>;
 };
 ```
+
 ### Service Dependency usage
 
 create a new service that depends on the `DataService`:
