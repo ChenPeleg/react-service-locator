@@ -21,7 +21,8 @@ export default defineConfig({
       outDir: 'dist',
       insertTypesEntry: true,
       cleanVueFileName: true,
-
+      rollupTypes: true,
+      tsconfigPath: "./tsconfig.app.json",
     }),
   ],
 });
