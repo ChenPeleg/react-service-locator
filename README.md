@@ -1,4 +1,4 @@
-[![Status badge](https://github.com/ChenPeleg/react-services-locator/actions/workflows/ci-tests.yml/badge.svg?branch=main)](https://github.com/ChenPeleg/react-services-locator/actions/?query=branch%3Amain)
+[![Status badge](https://github.com/ChenPeleg/react-services-locator/actions/workflows/ci-test.yml/badge.svg?branch=main)](https://github.com/ChenPeleg/react-services-locator/actions/?query=branch%3Amain)
 [![npm version](https://badge.fury.io/js/react-services-locator.svg)](https://badge.fury.io/js/react-services-locator)
 [![Licence](https://img.shields.io/github/license/ChenPeleg/react-services-locator.svg?style=flat&colorA=18181B&colorB=28CF8D)](https://github.com/ChenPeleg/react-services-locator/LICENCE)
 
