@@ -159,7 +159,58 @@ export const Consumer = () => {
 };
 ```
 
+### Advanced usage - useClass (for testing)
 
+You can use the `ServiceLocatorProvider` to provide a different service implementation for testing purposes:
+
+```tsx
+import React from 'react';
+import { ServicesProvider } from 'react-services-locator';
+
+export class MockDataService extends AbstractBaseService {
+    constructor(provider: ServicesResolver) {
+        super(provider);
+    }
+    getData(url) {
+        return Promise.resolve('mocked data');
+    }
+}
+
+<ServicesProvider
+    services={[{ provide: DataService, useClass : MockDataService },ProfileDataService]}>
+    <Consumer />
+</ServicesProvider>
+```
+
+In this example, the `DataService` service is replaced with the `MockDataService` service.
+The Consumer component will now use the `MockDataService` service instead of the `DataService` service.
+
+
+### Advanced usage - Factory function (for complex initialization)
+
+You can use a factory function to create a service instance:
+
+```tsx
+import React from 'react';
+import { ServicesProvider } from 'react-services-locator';
+
+export class HttpService extends AbstractBaseService {
+    constructor(provider: ServicesResolver, baseUrl: string) {
+        super(provider);
+        this.baseUrl = url;
+    } 
+}
+
+<ServicesProvider
+    services={[{
+        provide: HttpService,
+        useFactory: (provider) => new HttpService(provider, 'https://baseurl.com'),
+    }]}>
+    <Consumer />
+</ServicesProvider>
+```
+> > [!IMPORTANT] 
+> Notice that the factory function receives the `ServicesResolver` as a first argument, so all other arguments should come after it.
 
 
 ## Todo
