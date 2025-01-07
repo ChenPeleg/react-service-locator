@@ -63,11 +63,11 @@ describe('useService', () => {
 
         try {
             renderHook(() => useService(
-                // @ts-ignore
+                // @ts-expect-error Testing non-existent service
                 class NonExistentService extends AbstractBaseService {}), { wrapper });
         } catch (error) {
             expect(error).toBeDefined();
-            // @ts-ignore
+            // @ts-expect-error Testing error message
             expect(error.message).toBe('[ServicesResolver] Service NonExistentService does not exist');
         }
     });

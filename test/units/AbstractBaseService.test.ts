@@ -7,7 +7,7 @@ class TestService extends AbstractBaseService {
         super(servicesProvider);
     }
     public getServiceProvider() {
-        return this.servicesProvider;
+        return this.servicesResolver;
     }
 }
 

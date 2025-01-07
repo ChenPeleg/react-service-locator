@@ -11,7 +11,7 @@ export class DataService extends AbstractBaseService {
         this.dataType = dataType;
     }
     getFromLocalStorage(key: string): string | null {
-        const storageService =  this.servicesProvider.getService(LocalStorageService);
+        const storageService =  this.servicesResolver.getService(LocalStorageService);
         return storageService.getItem(key);
     }
 
