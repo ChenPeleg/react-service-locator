@@ -160,9 +160,10 @@ export const Consumer = () => {
 ```
 
 
+
+
 ## Todo
-- add jsdoc notations
-- add tests
+- add jsdoc notations 
 - add more examples
 - add more documentation about complex usage
 
