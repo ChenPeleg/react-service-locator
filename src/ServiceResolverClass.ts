@@ -1,6 +1,6 @@
 import { AbstractBaseService } from './AbstractBaseService.ts';
-
-export type ServiceConstructorClass = new (...args: unknown[]) => AbstractBaseService;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type ServiceConstructorClass = new (...args: any[]) => AbstractBaseService;
 export type ServiceWithSpecificToken = {
     provide: unknown;
     useClass: ServiceConstructorClass;
@@ -20,7 +20,7 @@ export class ServicesResolver {
 
     public getService<T extends ServiceConstructorClass>(service: T): InstanceType<T> {
         if (!this._servicesMap.has(service)) {
-            throw new Error(`[ServicesResolver] Service  ${service.name || service} does not exist`);
+            throw new Error(`[ServicesResolver] Service ${service.name || service} does not exist`);
         }
         return this._servicesMap.get(service) as InstanceType<T>;
     }
