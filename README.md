@@ -220,7 +220,49 @@ export class HttpService extends AbstractBaseService {
 > Notice that the factory function receives the `ServicesResolver` as a first argument, so all other arguments should come after it.
 
 
- 
+## Caveats
+
+### Services are not available in the service constructor
+
+You can't use get Other services **inside the service class constructor**. Because the services are not yet registered:
+
+```typescript
+import { DataService } from './dataService';
+import { AbstractBaseService  } from 'react-services-locator'
+export class ProfileDataService extends AbstractBaseService {
+    constructor(provider: ServicesResolver) {
+        super(provider);
+        const dataService =  this.servicesProvider.getService(DataService); 
+        // ❌ error: Service DataService does not exist 
+    }
+}
+```
+### No support for multiple ServiceProviders
+
+You can use multiple service providers that some are children of others etc. But, this library was build for **only one global service provider**.
+
+So if you would build something like this:
+```tsx
+<ServicesProvider services={[FirstService]}>>
+    <ServicesProvider
+        services={[SecondService]}>
+        <Consumer />
+    </ServicesProvider>
+</ServicesProvider>
+```
+
+The `Consumer` will not be able to get the second service because of how React Context works:
+
+```tsx
+export const Consumer = () => {
+    const firstService = useService(FirstService);
+    // ❌ error: Service FirstService does not exist 
+    return <div>
+      
+       </div>;
+};
+```
+So just use it as one global service provider. 
 
 ## Inspiration
 
