@@ -1,7 +1,7 @@
 [![Status badge](https://github.com/ChenPeleg/react-services-locator/actions/workflows/ci-test.yml/badge.svg?branch=main)](https://github.com/ChenPeleg/react-services-locator/actions/?query=branch%3Amain)
 [![npm version](https://badge.fury.io/js/react-services-locator.svg)](https://badge.fury.io/js/react-services-locator)
 [![Licence](https://img.shields.io/github/license/ChenPeleg/react-services-locator.svg?style=flat&colorA=18181B&colorB=28CF8D)](https://github.com/ChenPeleg/react-services-locator/LICENCE)
-
+![NPM Downloads](https://img.shields.io/npm/d18m/react-services-locator)
 
 # React services locator
  
